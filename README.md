@@ -1,6 +1,6 @@
 # ActionSheet for Android
 
-[![Download](https://api.bintray.com/packages/quangnguyen/maven/actionsheet-android/images/download.svg) ](https://bintray.com/quangnguyen/maven/actionsheet-android/_latestVersion) 
+[ ![Download](https://api.bintray.com/packages/aromajoin/maven/actionsheet-android/images/download.svg) ](https://bintray.com/aromajoin/maven/actionsheet-android/_latestVersion)
 [![License](https://img.shields.io/badge/license-Apache%202-4EB1BA.svg?style=flat-square)](https://www.apache.org/licenses/LICENSE-2.0.html)
 
 **A small library which creates iPad-style ActionSheet for Android apps**  
