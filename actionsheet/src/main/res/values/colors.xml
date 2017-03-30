@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- sources: http://materialuicolors.co/ -->
+    <color name="black">#000000</color>
+    <color name="blue">#2196F3</color>
+    <color name="red">#F44336</color>
+
+    <color name="light_gray">#05000000</color>
+</resources>

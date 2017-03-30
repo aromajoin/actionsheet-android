@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ContentView">
+        <attr name="asTitleColor" format="color|reference"/>
+        <attr name="asDefaultColor" format="color|reference"/>
+        <attr name="asDestructiveColor" format="color|reference"/>
+    </declare-styleable>
+</resources>
