@@ -1,11 +1,11 @@
 # ActionSheet for Android
 
-[![Download](https://api.bintray.com/packages/quangnguyen/maven/actionsheet-android/images/download.svg) ](https://bintray.com/quangnguyen/maven/actionsheet-android/_latestVersion) 
+[![Download](https://api.bintray.com/packages/quangnguyen/maven/actionsheet-android/images/download.svg) ](https://bintray.com/quangnguyen/maven/actionsheet-android/_latestVersion)
 [![License](https://img.shields.io/badge/license-Apache%202-4EB1BA.svg?style=flat-square)](https://www.apache.org/licenses/LICENSE-2.0.html)
 
 **A small library which creates iPad-style ActionSheet for Android apps**  
-  
-![Screenshots](https://raw.githubusercontent.com/aromajoin/actionsheet-android/master/screenshots/screenshot.png)  
+
+![Screenshots](https://raw.githubusercontent.com/aromajoin/actionsheet-android/master/screenshots/demo.gif)  
 
 # Table of Contents
 1. [Download](#download)
@@ -22,15 +22,15 @@ The Gradle dependency is available via jCenter.
 
 
 ```java
-    
+
     // Sets it up
     ActionSheet actionSheet = new ActionSheet(context);
     actionSheet.setTitle(title);
     actionSheet.setSourceView(anchorView);
-    
+
     // Adds as many actions as you need...
     actionSheet.addAction(actionTitle, actionStyle, actionListener);
-        
+
     // Shows it. Done.
     actionSheet.show();
 ```  
