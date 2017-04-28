@@ -38,7 +38,7 @@ The Gradle dependency is available via jCenter.
     actionSheet.show();
 ```  
 
-If you don't like default colors, add these following to your styles.xml, under *your app's theme*.
+If you don't like default theme, add these following to your styles.xml, under *your app's theme*.
 ```xml
   <style name="YourAppTheme">
         <!-- Other properties .... -->
