@@ -11,54 +11,47 @@ import com.aromajoin.actionsheet.OnActionListener;
 
 public class MainActivity extends AppCompatActivity {
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+  @Override protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_main);
 
-        Button button = (Button) findViewById(R.id.show);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showActionSheet(view);
-            }
-        });
-    }
+    Button button = (Button) findViewById(R.id.show);
+    button.setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View view) {
+        showActionSheet(view);
+      }
+    });
+  }
 
-    private void showActionSheet(View anchor) {
-        ActionSheet actionSheet = new ActionSheet(this);
-        actionSheet.setTitle("Example Title");
-        actionSheet.setSourceView(anchor);
-        actionSheet.addAction("Action 1", ActionSheet.Style.DEFAULT, new OnActionListener() {
-            @Override
-            public void onSelected(ActionSheet actionSheet, String title) {
-                performAction(title);
-                actionSheet.dismiss();
-            }
-        });
-        actionSheet.addAction("Action 2", ActionSheet.Style.DEFAULT, new OnActionListener() {
-            @Override
-            public void onSelected(ActionSheet actionSheet, String title) {
-                performAction(title);
-                actionSheet.dismiss();
-            }
-        });
+  private void showActionSheet(View anchor) {
+    ActionSheet actionSheet = new ActionSheet(this);
+    actionSheet.setTitle("Example Title");
+    actionSheet.setSourceView(anchor);
+    actionSheet.addAction("Action 1", ActionSheet.Style.DEFAULT, new OnActionListener() {
+      @Override public void onSelected(ActionSheet actionSheet, String title) {
+        performAction(title);
+        actionSheet.dismiss();
+      }
+    });
+    actionSheet.addAction("Action 2", ActionSheet.Style.DEFAULT, new OnActionListener() {
+      @Override public void onSelected(ActionSheet actionSheet, String title) {
+        performAction(title);
+        actionSheet.dismiss();
+      }
+    });
 
-        actionSheet.addAction("Action 3", ActionSheet.Style.DESTRUCTIVE, new OnActionListener() {
-            @Override
-            public void onSelected(ActionSheet actionSheet, String title) {
-                performAction(title);
-                actionSheet.dismiss();
-            }
-        });
+    actionSheet.addAction("Action 3", ActionSheet.Style.DESTRUCTIVE, new OnActionListener() {
+      @Override public void onSelected(ActionSheet actionSheet, String title) {
+        performAction(title);
+        actionSheet.dismiss();
+      }
+    });
 
-        actionSheet.show();
-    }
+    actionSheet.show();
+  }
 
-    private void performAction(String title) {
-        Snackbar.make(MainActivity.this.findViewById(android.R.id.content),
-                title,
-                Snackbar.LENGTH_SHORT)
-                .show();
-    }
+  private void performAction(String title) {
+    Snackbar.make(MainActivity.this.findViewById(android.R.id.content), title,
+        Snackbar.LENGTH_SHORT).show();
+  }
 }
