@@ -113,7 +113,7 @@ public class ActionSheet {
         if (viewRect == null) return;
 
         // Points SheetView to the center of its anchor view
-        mContentView.measure(ContentView.DEFAULT_WIDTH, ViewGroup.LayoutParams.WRAP_CONTENT);
+        mContentView.measure(mContentView.getWidth(), ViewGroup.LayoutParams.WRAP_CONTENT);
         int xPoint = viewRect.left + mAnchorView.getWidth() / 2 - mContentView.getMeasuredWidth() / 2; // left
         int yPoint = viewRect.top + mAnchorView.getHeight() / 2 - mContentView.getMeasuredHeight(); // top
 

@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="ContentView">
-        <attr name="asTitleColor" format="color|reference"/>
-        <attr name="asDefaultColor" format="color|reference"/>
-        <attr name="asDestructiveColor" format="color|reference"/>
-    </declare-styleable>
+  <declare-styleable name="ContentView">
+    <attr format="dimension|reference" name="asWidth"/>
+    <attr format="color|reference" name="asTitleColor"/>
+    <attr format="dimension|reference" name="asTitleTextSize"/>
+    <attr format="color|reference" name="asDefaultColor"/>
+    <attr format="color|reference" name="asDestructiveColor"/>
+    <attr format="dimension|reference" name="asActionTextSize"/>
+  </declare-styleable>
 </resources>

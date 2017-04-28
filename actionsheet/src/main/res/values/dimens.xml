@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="divider_height">1dp</dimen>
-    <dimen name="divider_margin_horizontal">2dp</dimen>
-    <dimen name="title_padding_vertical">2dp</dimen>
+  <dimen name="actionsheet_width">150dp</dimen>
+  <dimen name="divider_height">1dp</dimen>
+  <dimen name="divider_margin_horizontal">2dp</dimen>
+  <dimen name="title_padding_vertical">4dp</dimen>
+  <dimen name="title_text_size">12sp</dimen>
+  <dimen name="action_text_size">14sp</dimen>
 </resources>
