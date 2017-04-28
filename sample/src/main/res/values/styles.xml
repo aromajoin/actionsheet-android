@@ -7,10 +7,13 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
 
-        <!-- Set color for Action Sheet view-->
+        <!-- Customize ActionSheet style -->
+        <item name="asWidth">180dp</item>
         <item name="asTitleColor">@android:color/darker_gray</item>
         <item name="asDefaultColor">@color/colorPrimary</item>
         <item name="asDestructiveColor">@color/colorAccent</item>
+        <item name="asTitleTextSize">12sp</item>
+        <item name="asActionTextSize">14sp</item>
     </style>
 
 </resources>

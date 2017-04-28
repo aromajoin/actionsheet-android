@@ -17,15 +17,15 @@ package com.aromajoin.actionsheet;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 /**
  * Created by Quang Nguyen on 3/16/17.
@@ -34,130 +34,155 @@ import android.widget.LinearLayout;
  */
 
 class ContentView extends LinearLayout {
-    static final int DEFAULT_WIDTH = ViewUtils.getScreenWidth() / 3;
-    private Button mTitleView;
-    private ActionSheet mActionSheet;
+  private TextView titleView;
+  private LinearLayout actionContainer;
+  private ActionSheet actionSheet;
 
-    // Custom styleable properties
-    private int mTitleColor;
-    private int mDefaultActionColor;
-    private int mDestructiveActionColor;
+  // Custom styleable properties
+  private float width;
+  private int titleColor;
+  private int defaultActionColor;
+  private int destructiveActionColor;
+  private float titleTextSize;
+  private float actionTextSize;
 
-    public ContentView(ActionSheet actionSheet) {
-        super(actionSheet.getContext());
-        mActionSheet = actionSheet;
+  public ContentView(ActionSheet actionSheet) {
+    super(actionSheet.getContext());
+    this.actionSheet = actionSheet;
 
-        init(actionSheet.getContext());
+    init(actionSheet.getContext());
+  }
+
+  private void init(Context context) {
+    getAttrs(context);
+
+    setOrientation(VERTICAL);
+    setGravity(Gravity.CENTER);
+    addTitle(context);
+    addActionContainer(context);
+  }
+
+  private void getAttrs(Context context) {
+    TypedArray typedArray = context.getTheme().obtainStyledAttributes(R.styleable.ContentView);
+
+    width = typedArray.getDimension(R.styleable.ContentView_asWidth,
+        getResources().getDimension(R.dimen.actionsheet_width));
+    titleColor = typedArray.getColor(R.styleable.ContentView_asTitleColor,
+        ContextCompat.getColor(getContext(), R.color.black));
+    defaultActionColor = typedArray.getColor(R.styleable.ContentView_asDefaultColor,
+        ContextCompat.getColor(getContext(), R.color.blue));
+    destructiveActionColor = typedArray.getColor(R.styleable.ContentView_asDestructiveColor,
+        ContextCompat.getColor(getContext(), R.color.red));
+    titleTextSize = typedArray.getDimension(R.styleable.ContentView_asTitleTextSize,
+        getResources().getDimension(R.dimen.title_text_size));
+    actionTextSize = typedArray.getDimension(R.styleable.ContentView_asActionTextSize,
+        getResources().getDimension(R.dimen.action_text_size));
+  }
+
+  private void addTitle(Context context) {
+    titleView = new TextView(context);
+    FrameLayout.LayoutParams titleLp =
+        new FrameLayout.LayoutParams((int) width, FrameLayout.LayoutParams.WRAP_CONTENT);
+    titleView.setGravity(Gravity.CENTER);
+    titleView.setClickable(false);
+    int paddingVertical =
+        (int) (getContext().getResources().getDimension(R.dimen.title_padding_vertical));
+    titleView.setPadding(0, paddingVertical, 0, paddingVertical);
+    titleView.setBackgroundResource(R.drawable.bg_top_rounded);
+    titleView.setTextColor(titleColor);
+    titleView.setTextSize(TypedValue.COMPLEX_UNIT_PX, titleTextSize);
+    addView(titleView, titleLp);
+  }
+
+  private void addActionContainer(Context context) {
+    actionContainer = new LinearLayout(context);
+    LinearLayout.LayoutParams actionContainerLp = new LinearLayout.LayoutParams((int) width,
+        LinearLayout.LayoutParams.WRAP_CONTENT);
+    actionContainer.setBackgroundResource(R.drawable.bg_bottom_rounded);
+    actionContainer.setOrientation(VERTICAL);
+    addView(actionContainer, actionContainerLp);
+  }
+
+  public void setTitle(String title) {
+    if (titleView != null) {
+      titleView.setText(title);
+    }
+  }
+
+  public String getTitle() throws NullPointerException {
+    if (titleView != null) {
+      return titleView.getText().toString();
+    } else {
+      throw new NullPointerException();
+    }
+  }
+
+  public void addActionView(final String title, ActionSheet.Style style,
+      final OnActionListener listener) {
+    // Adds its divider above
+    addDividerView();
+
+    Button actionButton = new Button(
+        new android.view.ContextThemeWrapper(getContext(), R.style.DefaultTheme_Action), null,
+        R.style.DefaultTheme_Action);
+
+    FrameLayout.LayoutParams buttonLp = new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT,
+        FrameLayout.LayoutParams.WRAP_CONTENT);
+    actionContainer.addView(actionButton, buttonLp);
+
+    actionButton.setText(title);
+    actionButton.setTextSize(TypedValue.COMPLEX_UNIT_PX, actionTextSize);
+
+    // Sets text color based on action style
+    if (style == ActionSheet.Style.DEFAULT) {
+      actionButton.setTextColor(defaultActionColor);
+    } else if (style == ActionSheet.Style.DESTRUCTIVE) {
+      actionButton.setTextColor(destructiveActionColor);
     }
 
-    private void init(Context context) {
-        getAttrs(context);
+    //Sets button callback to handle to user's click
+    actionButton.setOnClickListener(new OnClickListener() {
+      @Override public void onClick(View view) {
+        listener.onSelected(actionSheet, title);
+      }
+    });
+  }
 
-        setOrientation(VERTICAL);
-        setGravity(Gravity.CENTER);
+  /**
+   * Draws a line between action buttons
+   */
+  private void addDividerView() {
+    int dividerHeight = (int) (getContext().getResources().getDimension(R.dimen.divider_height));
 
-        // Adds action sheet title
-        mTitleView = new Button(context);
-        FrameLayout.LayoutParams titleLp = new FrameLayout.LayoutParams(DEFAULT_WIDTH, FrameLayout.LayoutParams.WRAP_CONTENT);
-        mTitleView.setGravity(Gravity.CENTER);
-        mTitleView.setClickable(false);
-        int paddingHorizontal = (int) (getContext().getResources().getDimension(R.dimen.title_padding_vertical));
-        mTitleView.setPadding(0, paddingHorizontal, 0, paddingHorizontal);
-        mTitleView.setBackgroundColor(Color.WHITE);
-        mTitleView.setTextColor(mTitleColor);
-        addView(mTitleView, titleLp);
+    View divider = new View(getContext());
+    LayoutParams dividerBarLp = new LayoutParams(LayoutParams.MATCH_PARENT, dividerHeight);
+
+    actionContainer.addView(divider, dividerBarLp);
+    divider.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.light_gray));
+  }
+
+  private ImageView arrowView;
+
+  public void addArrow(Arrow style) {
+    if (arrowView != null) {
+      return;
     }
-
-    private void getAttrs(Context context) {
-        TypedArray typedArray = context.getTheme().obtainStyledAttributes(R.styleable.ContentView);
-
-        mTitleColor = typedArray.getColor(R.styleable.ContentView_asTitleColor,
-                ContextCompat.getColor(getContext(), R.color.black));
-        mDefaultActionColor = typedArray.getColor(R.styleable.ContentView_asDefaultColor,
-                ContextCompat.getColor(getContext(), R.color.blue));
-        mDestructiveActionColor = typedArray.getColor(R.styleable.ContentView_asDestructiveColor,
-                ContextCompat.getColor(getContext(), R.color.red));
-
+    arrowView = new ImageView(getContext());
+    switch (style) {
+      case UP:
+        break;
+      case DOWN:
+        arrowView.setBackgroundResource(R.drawable.ic_down);
+        break;
+      case RIGHT:
+        break;
+      case LEFT:
+        break;
     }
-
-    public void setTitle(String title) {
-        if (mTitleView != null) {
-            mTitleView.setText(title);
-        }
-    }
-
-    public String getTitle() throws NullPointerException {
-        if (mTitleView != null) {
-            return mTitleView.getText().toString();
-        } else {
-            throw new NullPointerException();
-        }
-    }
-
-    public void addActionView(final String title, ActionSheet.Style style, final OnActionListener listener) {
-        // Adds its divider above
-        addDividerView();
-
-        Button actionButton = new Button(getContext());
-        FrameLayout.LayoutParams buttonLp = new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT);
-        addView(actionButton, buttonLp);
-
-        // Sets title
-        actionButton.setText(title);
-
-        // Sets text color based on action style
-        if (style == ActionSheet.Style.DEFAULT) {
-            actionButton.setTextColor(mDefaultActionColor);
-        } else if (style == ActionSheet.Style.DESTRUCTIVE) {
-            actionButton.setTextColor(mDestructiveActionColor);
-        }
-
-        // Sets its background
-        actionButton.setBackgroundResource(R.drawable.bg_as_action_touch);
-
-        //Sets button callback to handle to user's click
-        actionButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                listener.onSelected(mActionSheet, title);
-            }
-        });
-    }
-
-    /**
-     * Draws a line between action buttons
-     */
-    private void addDividerView() {
-        int dividerHeight = (int) (getContext().getResources().getDimension(R.dimen.divider_height));
-        int marginHorizontal = (int) (getContext().getResources().getDimension(R.dimen.divider_margin_horizontal));
-
-        View divider = new View(getContext());
-        LayoutParams dividerBarLp = new LayoutParams(LayoutParams.MATCH_PARENT, dividerHeight);
-        dividerBarLp.setMargins(marginHorizontal, 0, marginHorizontal, 0);
-
-        addView(divider, dividerBarLp);
-        divider.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.light_gray));
-    }
-
-    private ImageView mArrowView;
-    public void addArrow(Arrow style) {
-        if (mArrowView != null){
-            return;
-        }
-        mArrowView = new ImageView(getContext());
-        switch (style) {
-            case UP:
-                break;
-            case DOWN:
-                mArrowView.setBackgroundResource(R.drawable.ic_down);
-                break;
-            case RIGHT:
-                break;
-            case LEFT:
-                break;
-        }
-        LayoutParams arrowLp = new LayoutParams(LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        addView(mArrowView, arrowLp);
-    }
-
+    int size =
+        (int) (getContext().getResources().getDimension(R.dimen.arrow_size));
+    LayoutParams arrowLp =
+        new LayoutParams(size, size);
+    addView(arrowView, arrowLp);
+  }
 }
