@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-  <style name="DefaultTheme" parent="Theme.AppCompat.Light"/>
-
   <style name="DefaultTheme.Action" parent="Widget.AppCompat.Button.Borderless.Colored">
   </style>
 </resources>
