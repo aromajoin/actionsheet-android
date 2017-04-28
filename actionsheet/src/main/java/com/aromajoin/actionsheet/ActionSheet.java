@@ -80,7 +80,7 @@ public class ActionSheet {
         }
     }
 
-    public Context getContext() {
+    Context getContext() {
         return context;
     }
 

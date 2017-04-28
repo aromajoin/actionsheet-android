@@ -17,12 +17,10 @@ package com.aromajoin.actionsheet;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -49,7 +47,7 @@ class ContentView extends LinearLayout {
   private float actionTextSize;
 
   public ContentView(ActionSheet actionSheet) {
-    super(actionSheet.getContext(), null, R.style.DefaultTheme);
+    super(actionSheet.getContext());
     this.actionSheet = actionSheet;
 
     init(actionSheet.getContext());
@@ -90,7 +88,7 @@ class ContentView extends LinearLayout {
     int paddingVertical =
         (int) (getContext().getResources().getDimension(R.dimen.title_padding_vertical));
     titleView.setPadding(0, paddingVertical, 0, paddingVertical);
-    titleView.setBackgroundColor(Color.WHITE);
+    titleView.setBackgroundResource(R.drawable.bg_top_rounded);
     titleView.setTextColor(titleColor);
     titleView.setTextSize(TypedValue.COMPLEX_UNIT_PX, titleTextSize);
     addView(titleView, titleLp);
@@ -100,7 +98,7 @@ class ContentView extends LinearLayout {
     actionContainer = new LinearLayout(context);
     LinearLayout.LayoutParams actionContainerLp = new LinearLayout.LayoutParams((int) width,
         LinearLayout.LayoutParams.WRAP_CONTENT);
-    actionContainer.setBackgroundColor(Color.WHITE);
+    actionContainer.setBackgroundResource(R.drawable.bg_bottom_rounded);
     actionContainer.setOrientation(VERTICAL);
     addView(actionContainer, actionContainerLp);
   }
@@ -181,8 +179,10 @@ class ContentView extends LinearLayout {
       case LEFT:
         break;
     }
+    int size =
+        (int) (getContext().getResources().getDimension(R.dimen.arrow_size));
     LayoutParams arrowLp =
-        new LayoutParams(LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        new LayoutParams(size, size);
     addView(arrowView, arrowLp);
   }
 }

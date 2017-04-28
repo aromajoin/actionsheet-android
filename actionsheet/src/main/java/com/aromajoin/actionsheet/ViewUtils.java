@@ -17,7 +17,6 @@
 package com.aromajoin.actionsheet;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Rect;
 import android.view.View;
 
@@ -55,5 +54,4 @@ class ViewUtils {
         }
         return result;
     }
-
 }
