@@ -49,13 +49,13 @@ public class ActionSheet {
         DESTRUCTIVE
     }
 
-    private PopupWindow mPopupWindow;
+    private PopupWindow popupWindow;
 
-    private ContentView mContentView;
+    private ContentView contentView;
 
-    private View mAnchorView;
+    private View anchorView;
 
-    private Context mContext;
+    private Context context;
 
     public ActionSheet(Context context) {
         init(context,
@@ -64,24 +64,24 @@ public class ActionSheet {
     }
 
     private void init(Context context, int width, int height) {
-        mContext = context;
-        if (mPopupWindow == null) {
-            mContentView = new ContentView(this);
-            mPopupWindow = new PopupWindow(mContentView,
+        this.context = context;
+        if (popupWindow == null) {
+            contentView = new ContentView(this);
+            popupWindow = new PopupWindow(contentView,
                     width,
                     height,
                     true);
 
             // Closes the popup window when touch outside
-            mPopupWindow.setOutsideTouchable(true);
-            mPopupWindow.setFocusable(true);
+            popupWindow.setOutsideTouchable(true);
+            popupWindow.setFocusable(true);
             // Removes default background
-            mPopupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         }
     }
 
     public Context getContext() {
-        return mContext;
+        return context;
     }
 
     /**
@@ -90,13 +90,13 @@ public class ActionSheet {
      * @param title the name of the ActionSheet view
      */
     public void setTitle(String title) {
-        if (mContentView != null) {
-            mContentView.setTitle(title);
+        if (contentView != null) {
+            contentView.setTitle(title);
         }
     }
 
     public String getTitle() {
-        return mContentView.getTitle();
+        return contentView.getTitle();
     }
 
     /**
@@ -104,31 +104,31 @@ public class ActionSheet {
      */
     public void show() {
         // Add arrow to actionsheet
-        mContentView.addArrow(Arrow.DOWN);
+        contentView.addArrow(Arrow.DOWN);
 
-        if (mAnchorView == null) return;
-        if (mPopupWindow == null) return;
+        if (anchorView == null) return;
+        if (popupWindow == null) return;
 
-        Rect viewRect = ViewUtils.locateView(mAnchorView);
+        Rect viewRect = ViewUtils.locateView(anchorView);
         if (viewRect == null) return;
 
         // Points SheetView to the center of its anchor view
-        mContentView.measure(mContentView.getWidth(), ViewGroup.LayoutParams.WRAP_CONTENT);
-        int xPoint = viewRect.left + mAnchorView.getWidth() / 2 - mContentView.getMeasuredWidth() / 2; // left
-        int yPoint = viewRect.top + mAnchorView.getHeight() / 2 - mContentView.getMeasuredHeight(); // top
+        contentView.measure(contentView.getWidth(), ViewGroup.LayoutParams.WRAP_CONTENT);
+        int xPoint = viewRect.left + anchorView.getWidth() / 2 - contentView.getMeasuredWidth() / 2; // left
+        int yPoint = viewRect.top + anchorView.getHeight() / 2 - contentView.getMeasuredHeight(); // top
 
         // Makes sure that action sheet is always shown inside screen.
-        if ( yPoint <= ViewUtils.getStatusBarHeight(mContext)) {
-            yPoint = ViewUtils.getStatusBarHeight(mContext);
+        if ( yPoint <= ViewUtils.getStatusBarHeight(context)) {
+            yPoint = ViewUtils.getStatusBarHeight(context);
         }
 
-        if (mPopupWindow.isShowing()) {
-            mPopupWindow.update(xPoint,
+        if (popupWindow.isShowing()) {
+            popupWindow.update(xPoint,
                     yPoint,
                     -1,
                     -1);
         } else {
-            mPopupWindow.showAtLocation(mAnchorView.getRootView(),
+            popupWindow.showAtLocation(anchorView.getRootView(),
                     Gravity.NO_GRAVITY,
                     xPoint,
                     yPoint);
@@ -139,7 +139,7 @@ public class ActionSheet {
      * Hides ActionSheet view when completion.
      */
     public void dismiss() {
-        mPopupWindow.dismiss();
+        popupWindow.dismiss();
     }
 
     /**
@@ -148,7 +148,7 @@ public class ActionSheet {
      * @param anchorView an element view of the container which the ActionShet will point at.
      */
     public void setSourceView(View anchorView) {
-        mAnchorView = anchorView;
+        this.anchorView = anchorView;
     }
 
     /**
@@ -159,8 +159,8 @@ public class ActionSheet {
      * @param listener call back when users click action
      */
     public void addAction(String title, Style style, OnActionListener listener) {
-        if (mContentView == null) return;
+        if (contentView == null) return;
         if (listener == null) return;
-        mContentView.addActionView(title, style, listener);
+        contentView.addActionView(title, style, listener);
     }
 }

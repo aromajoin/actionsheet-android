@@ -19,7 +19,6 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.AppCompatButton;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
@@ -37,21 +36,21 @@ import android.widget.TextView;
  */
 
 class ContentView extends LinearLayout {
-  private TextView mTitleView;
-  private LinearLayout mActionContainer;
-  private ActionSheet mActionSheet;
+  private TextView titleView;
+  private LinearLayout actionContainer;
+  private ActionSheet actionSheet;
 
   // Custom styleable properties
-  private float mWidth;
-  private int mTitleColor;
-  private int mDefaultActionColor;
-  private int mDestructiveActionColor;
-  private float mTitleTextSize;
-  private float mActionTextSize;
+  private float width;
+  private int titleColor;
+  private int defaultActionColor;
+  private int destructiveActionColor;
+  private float titleTextSize;
+  private float actionTextSize;
 
   public ContentView(ActionSheet actionSheet) {
     super(actionSheet.getContext(), null, R.style.DefaultTheme);
-    mActionSheet = actionSheet;
+    this.actionSheet = actionSheet;
 
     init(actionSheet.getContext());
   }
@@ -68,53 +67,53 @@ class ContentView extends LinearLayout {
   private void getAttrs(Context context) {
     TypedArray typedArray = context.getTheme().obtainStyledAttributes(R.styleable.ContentView);
 
-    mWidth = typedArray.getDimension(R.styleable.ContentView_asWidth,
+    width = typedArray.getDimension(R.styleable.ContentView_asWidth,
         getResources().getDimension(R.dimen.actionsheet_width));
-    mTitleColor = typedArray.getColor(R.styleable.ContentView_asTitleColor,
+    titleColor = typedArray.getColor(R.styleable.ContentView_asTitleColor,
         ContextCompat.getColor(getContext(), R.color.black));
-    mDefaultActionColor = typedArray.getColor(R.styleable.ContentView_asDefaultColor,
+    defaultActionColor = typedArray.getColor(R.styleable.ContentView_asDefaultColor,
         ContextCompat.getColor(getContext(), R.color.blue));
-    mDestructiveActionColor = typedArray.getColor(R.styleable.ContentView_asDestructiveColor,
+    destructiveActionColor = typedArray.getColor(R.styleable.ContentView_asDestructiveColor,
         ContextCompat.getColor(getContext(), R.color.red));
-    mTitleTextSize = typedArray.getDimension(R.styleable.ContentView_asTitleTextSize,
+    titleTextSize = typedArray.getDimension(R.styleable.ContentView_asTitleTextSize,
         getResources().getDimension(R.dimen.title_text_size));
-    mActionTextSize = typedArray.getDimension(R.styleable.ContentView_asActionTextSize,
+    actionTextSize = typedArray.getDimension(R.styleable.ContentView_asActionTextSize,
         getResources().getDimension(R.dimen.action_text_size));
   }
 
   private void addTitle(Context context) {
-    mTitleView = new TextView(context);
+    titleView = new TextView(context);
     FrameLayout.LayoutParams titleLp =
-        new FrameLayout.LayoutParams((int) mWidth, FrameLayout.LayoutParams.WRAP_CONTENT);
-    mTitleView.setGravity(Gravity.CENTER);
-    mTitleView.setClickable(false);
+        new FrameLayout.LayoutParams((int) width, FrameLayout.LayoutParams.WRAP_CONTENT);
+    titleView.setGravity(Gravity.CENTER);
+    titleView.setClickable(false);
     int paddingVertical =
         (int) (getContext().getResources().getDimension(R.dimen.title_padding_vertical));
-    mTitleView.setPadding(0, paddingVertical, 0, paddingVertical);
-    mTitleView.setBackgroundColor(Color.WHITE);
-    mTitleView.setTextColor(mTitleColor);
-    mTitleView.setTextSize(TypedValue.COMPLEX_UNIT_PX, mTitleTextSize);
-    addView(mTitleView, titleLp);
+    titleView.setPadding(0, paddingVertical, 0, paddingVertical);
+    titleView.setBackgroundColor(Color.WHITE);
+    titleView.setTextColor(titleColor);
+    titleView.setTextSize(TypedValue.COMPLEX_UNIT_PX, titleTextSize);
+    addView(titleView, titleLp);
   }
 
   private void addActionContainer(Context context) {
-    mActionContainer = new LinearLayout(context);
-    LinearLayout.LayoutParams actionContainerLp = new LinearLayout.LayoutParams((int) mWidth,
+    actionContainer = new LinearLayout(context);
+    LinearLayout.LayoutParams actionContainerLp = new LinearLayout.LayoutParams((int) width,
         LinearLayout.LayoutParams.WRAP_CONTENT);
-    mActionContainer.setBackgroundColor(Color.WHITE);
-    mActionContainer.setOrientation(VERTICAL);
-    addView(mActionContainer, actionContainerLp);
+    actionContainer.setBackgroundColor(Color.WHITE);
+    actionContainer.setOrientation(VERTICAL);
+    addView(actionContainer, actionContainerLp);
   }
 
   public void setTitle(String title) {
-    if (mTitleView != null) {
-      mTitleView.setText(title);
+    if (titleView != null) {
+      titleView.setText(title);
     }
   }
 
   public String getTitle() throws NullPointerException {
-    if (mTitleView != null) {
-      return mTitleView.getText().toString();
+    if (titleView != null) {
+      return titleView.getText().toString();
     } else {
       throw new NullPointerException();
     }
@@ -131,22 +130,22 @@ class ContentView extends LinearLayout {
 
     FrameLayout.LayoutParams buttonLp = new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT,
         FrameLayout.LayoutParams.WRAP_CONTENT);
-    mActionContainer.addView(actionButton, buttonLp);
+    actionContainer.addView(actionButton, buttonLp);
 
     actionButton.setText(title);
-    actionButton.setTextSize(TypedValue.COMPLEX_UNIT_PX, mActionTextSize);
+    actionButton.setTextSize(TypedValue.COMPLEX_UNIT_PX, actionTextSize);
 
     // Sets text color based on action style
     if (style == ActionSheet.Style.DEFAULT) {
-      actionButton.setTextColor(mDefaultActionColor);
+      actionButton.setTextColor(defaultActionColor);
     } else if (style == ActionSheet.Style.DESTRUCTIVE) {
-      actionButton.setTextColor(mDestructiveActionColor);
+      actionButton.setTextColor(destructiveActionColor);
     }
 
     //Sets button callback to handle to user's click
     actionButton.setOnClickListener(new OnClickListener() {
       @Override public void onClick(View view) {
-        listener.onSelected(mActionSheet, title);
+        listener.onSelected(actionSheet, title);
       }
     });
   }
@@ -160,22 +159,22 @@ class ContentView extends LinearLayout {
     View divider = new View(getContext());
     LayoutParams dividerBarLp = new LayoutParams(LayoutParams.MATCH_PARENT, dividerHeight);
 
-    mActionContainer.addView(divider, dividerBarLp);
+    actionContainer.addView(divider, dividerBarLp);
     divider.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.light_gray));
   }
 
-  private ImageView mArrowView;
+  private ImageView arrowView;
 
   public void addArrow(Arrow style) {
-    if (mArrowView != null) {
+    if (arrowView != null) {
       return;
     }
-    mArrowView = new ImageView(getContext());
+    arrowView = new ImageView(getContext());
     switch (style) {
       case UP:
         break;
       case DOWN:
-        mArrowView.setBackgroundResource(R.drawable.ic_down);
+        arrowView.setBackgroundResource(R.drawable.ic_down);
         break;
       case RIGHT:
         break;
@@ -184,6 +183,6 @@ class ContentView extends LinearLayout {
     }
     LayoutParams arrowLp =
         new LayoutParams(LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-    addView(mArrowView, arrowLp);
+    addView(arrowView, arrowLp);
   }
 }
