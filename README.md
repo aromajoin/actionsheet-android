@@ -19,7 +19,7 @@
 
 The Gradle dependency is available via jCenter.  
 ```gradle
-    compile 'com.aromajoin.library:actionsheet:0.0.1'
+    compile 'com.aromajoin.library:actionsheet:0.0.2'
 ```
 ## Usage
 
@@ -43,10 +43,13 @@ If you don't like default colors, add these following to your styles.xml, under 
   <style name="YourAppTheme">
         <!-- Other properties .... -->
 
-        <!-- Customize Action Sheet view-->
+        <!-- Customize ActionSheet style -->
+        <item name="asWidth">xdp</item>
         <item name="asTitleColor">color</item>
         <item name="asDefaultColor">color</item>
         <item name="asDestructiveColor">color</item>
+        <item name="asTitleTextSize">xsp</item>
+        <item name="asActionTextSize">xsp</item>
     </style>
 ```  
 
