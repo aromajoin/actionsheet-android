@@ -3,74 +3,72 @@ apply plugin: 'com.android.library'
 // Manifest version information
 def versionMajor = 0
 def versionMinor = 0
-def versionPatch = 1
+def versionPatch = 2
 
 // Maven and Bintray plugins
 buildscript {
-    repositories{
-        jcenter()
-    }
-    dependencies {
-        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.4'
-        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.4.1'
-    }
+  repositories {
+    jcenter()
+  }
+  dependencies {
+    classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.4'
+    classpath 'com.github.dcendents:android-maven-gradle-plugin:1.4.1'
+  }
 }
 
 /**
- * bintray configuration
- */
+ * bintray configuration*/
 ext {
 
-    bintrayRepo = 'maven'
-    bintrayName = 'actionsheet-android'
+  bintrayRepo = 'maven'
+  bintrayName = 'actionsheet-android'
 
-    publishedGroupId = 'com.aromajoin.library'
-    libraryName = 'ActionSheet Android'
-    artifact = 'actionsheet' //This artifact name should be the same with library module name
+  publishedGroupId = 'com.aromajoin.library'
+  libraryName = 'ActionSheet Android'
+  artifact = 'actionsheet' //This artifact name should be the same with library module name
 
-    libraryDescription = 'ActionSheet view for Android apps'
+  libraryDescription = 'ActionSheet view for Android apps'
 
-    siteUrl = 'https://github.com/aromajoin/actionsheet-android/'
-    gitUrl = 'https://github.com/aromajoin/actionsheet-android.git'
+  siteUrl = 'https://github.com/aromajoin/actionsheet-android/'
+  gitUrl = 'https://github.com/aromajoin/actionsheet-android.git'
 
-    libraryVersion = "${versionMajor}.${versionMinor}.${versionPatch}"
+  libraryVersion = "${versionMajor}.${versionMinor}.${versionPatch}"
 
-    developerId = 'quangctkm9207'
-    developerName = 'Quang Nguyen'
-    developerEmail = 'quangnguyen@aromajoin.com'
+  developerId = 'quangnguyen'
+  developerName = 'Quang Nguyen'
+  developerEmail = 'quangnguyen@aromajoin.com'
+  organization = 'aromajoin'
 
-    licenseName = 'The Apache Software License, Version 2.0'
-    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-    allLicenses = ["Apache-2.0"]
+  licenseName = 'The Apache Software License, Version 2.0'
+  licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+  allLicenses = ["Apache-2.0"]
 }
 
 /**
- * Project configuration
- */
+ * Project configuration*/
 android {
-    compileSdkVersion rootProject.ext.compileSdkVersion
-    buildToolsVersion rootProject.ext.buildToolsVersion
+  compileSdkVersion rootProject.ext.compileSdkVersion
+  buildToolsVersion rootProject.ext.buildToolsVersion
 
-    defaultConfig {
-        minSdkVersion rootProject.ext.minSdkVersion
-        targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode versionMajor * 10000 + versionMinor * 100 + versionPatch
-        versionName "${versionMajor}.${versionMinor}.${versionPatch}"
+  defaultConfig {
+    minSdkVersion rootProject.ext.minSdkVersion
+    targetSdkVersion rootProject.ext.targetSdkVersion
+    versionCode versionMajor * 10000 + versionMinor * 100 + versionPatch
+    versionName "${versionMajor}.${versionMinor}.${versionPatch}"
+  }
+  buildTypes {
+
+    release {
+      minifyEnabled false
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
     }
-    buildTypes {
-
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-    }
-
+  }
 }
 
 dependencies {
-    compile "com.android.support:appcompat-v7:$rootProject.ext.supportLibraryVersion"
+  compile "com.android.support:appcompat-v7:$rootProject.ext.supportLibraryVersion"
 }
 
-//use gradle distribution configuration files on a remote Github repository
-apply from: 'https://raw.githubusercontent.com/quangctkm9207/template-files/master/android/gradle/install.gradle'
-apply from: 'https://raw.githubusercontent.com/quangctkm9207/template-files/master/android/gradle/bintray.gradle'
+//use gradle distribution configuration files
+apply from: '../gradle/bintray/bintray.gradle'
+apply from: '../gradle/bintray/install.gradle'
