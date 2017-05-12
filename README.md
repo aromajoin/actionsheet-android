@@ -8,7 +8,7 @@
 
 **A small library which creates iPad-style ActionSheet for Android apps**  
 
-![Screenshots](https://raw.githubusercontent.com/aromajoin/actionsheet-android/master/screenshots/demo.gif)  
+![Screenshots](https://raw.githubusercontent.com/aromajoin/actionsheet-android/master/art/demo.gif)  
 
 # Table of Contents
 1. [Download](#download)
