@@ -70,5 +70,5 @@ dependencies {
 }
 
 //use gradle distribution configuration files
-apply from: '../gradle/bintray/bintray.gradle'
-apply from: '../gradle/bintray/install.gradle'
+//apply from: '../gradle/bintray/bintray.gradle'
+//apply from: '../gradle/bintray/install.gradle'
